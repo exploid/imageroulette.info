@@ -1,24 +1,33 @@
 require "open-uri"
-IMAGES = [
+Words = [
           "google",
           "arnold",
           "diehard",
          ]
 class MainController < Ramaze::Controller
-  layout '/layout'
   map '/'
   
   def index
   end
 
-  deny_layout :img
   def img
-    return %(<img src="#{random_path}" />)
+    # opening random_path returns this string:
+    #     <img src="http://www.aboutbodybuilding.org/wp-content/uploads/2011/09/bodybuilding-arnold-schwarzenegger.jpg" />
+    path = open(random_path).read.scan(/img src="(.*)"/i).flatten.first
+
+    img = open(path).read
+
+    response.body = img
+    response['Content-Length'] = img.length.to_s
+    response['Content-Type'] = "image/jpeg"
+    response['Content-Disposition'] = "inline; filename=imageroulette.jpg";
+
+    response.status = 200
   end
 
   private
   def random_path
-    word = IMAGES[ rand(IMAGES.size) ]
+    word = Words[ rand(Words.size) ]
     return "http://#{word}.jpg.to"
   end
 end
