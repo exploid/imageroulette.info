@@ -23,13 +23,12 @@ class MainController < Ramaze::Controller
     #     <img src="http://www.aboutbodybuilding.org/wp-content/uploads/2011/09/bodybuilding-arnold-schwarzenegger.jpg" />
     path = open(random_path).read.scan(/img src="(.*)"/i).flatten.first
 
-    img = open(path).read
+    img = open(path)
 
     response.body = img
     response['Content-Length'] = img.length.to_s
     response['Content-Type'] = "image/jpeg"
     response['Content-Disposition'] = "inline; filename=imageroulette.jpg";
-
     response.status = 200
   end
 
