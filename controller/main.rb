@@ -1,6 +1,7 @@
 require "open-uri"
 
 Ramaze::Route['img.imageroulette.info'] = lambda do |path, request|
+  return nil if path == "/favicon.ico"
   return (request.host == "img.imageroulette.info") ? "/img" : nil
 end
 
