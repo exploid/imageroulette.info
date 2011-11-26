@@ -1,6 +1,6 @@
 require "rubygems"
 
-gem "ramaze", "2009.03"
+gem "ramaze", "2011.10.23"
 require "ramaze"
 
 require "github/markup"
