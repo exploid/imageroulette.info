@@ -11,8 +11,9 @@ class MainController < Ramaze::Controller
   def index
   end
 
+  deny_layout :img
   def img
-    respond open(random_path).read
+    return %(<img src="#{random_path}" />)
   end
 
   private
