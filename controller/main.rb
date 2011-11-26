@@ -1,12 +1,18 @@
 require "open-uri"
+
+Ramaze::Route['img.imageroulette.info'] = lambda do |path, request|
+  return (request.host == "img.imageroulette.info") ? "/img" : nil
+end
+
 Words = [
           "google",
           "arnold",
           "diehard",
          ]
+
 class MainController < Ramaze::Controller
   map '/'
-  
+
   def index
   end
 
