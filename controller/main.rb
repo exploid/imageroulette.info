@@ -1,7 +1,7 @@
 require "open-uri"
 
-Ramaze::Route['img.imageroulette.info'] = lambda do |path, request|
-  if request.host == "img.imageroulette.info" and path == "/"
+Ramaze::Route['r.*.imageroulette.info'] = lambda do |path, request|
+  if request.host.match(/^r\..*\.imageroulette.info/) and path == "/"
     return "/img"
   end
 end
