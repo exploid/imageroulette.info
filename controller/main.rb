@@ -23,16 +23,7 @@ class MainController < Ramaze::Controller
     #     <img src="http://www.aboutbodybuilding.org/wp-content/uploads/2011/09/bodybuilding-arnold-schwarzenegger.jpg" />
     path = open(random_path).read.scan(/img src="(.*)"/i).flatten.first
 
-    io = open(path, "rb")
-    img = io.read
-
-    response.body = [img]
-    response['Content-Length'] = img.bytesize.to_s
-    response['Content-Type'] = io.content_type
-    response['Content-Disposition'] = "inline; filename=imageroulette.jpg";
-    response.status = 200
-
-    throw(:respond, response)
+    redirect path
   end
 
   private
