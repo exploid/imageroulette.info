@@ -1,16 +1,16 @@
 require "open-uri"
 
-Ramaze::Route['r.*.imageroulette.info'] = lambda do |path, request|
-  if request.host.match(/^r\..*\.imageroulette.info/) and path == "/"
+Ramaze::Route['r.jpgnow.info'] = lambda do |path, request|
+  if request.host.downcase == "r.jpgnow.info" and path == "/"
     return "/img"
   end
 end
 
 Words = [
-          "google",
-          "arnold",
-          "diehard",
-         ]
+         "google",
+         "arnold",
+         "diehard",
+        ]
 
 class MainController < Ramaze::Controller
   map '/'
