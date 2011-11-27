@@ -1,8 +1,17 @@
 require "open-uri"
 
-Ramaze::Route['r.jpgnow.info'] = lambda do |path, request|
-  if request.host.downcase == "random.jpgnow.info" and path == "/"
-    return "/img"
+[
+ # Redirect to a random image
+ [ "r.jpgnow.info", "/img" ],
+
+ # Redirect to a moustachified random image
+ [ "m.jpgnow.info", "/img/moustache" ],
+
+].each do |domain, route|
+  Ramaze::Route[domain] = lambda do |path, request|
+    if request.host.downcase == domain and path == "/"
+      return route
+    end
   end
 end
 
@@ -18,17 +27,25 @@ class MainController < Ramaze::Controller
   def index
   end
 
-  def img
-    # opening random_path returns this string:
-    #     <img src="http://www.aboutbodybuilding.org/wp-content/uploads/2011/09/bodybuilding-arnold-schwarzenegger.jpg" />
-    path = open(random_path).read.scan(/img src="(.*)"/i).flatten.first
-
-    redirect path
+  def img(type=nil)
+    case type
+    when "moustache" then
+      moustache_path = "http://mustachify.me/?src=#{URI.encode(jpg_to)}"
+      redirect moustache_path
+    else 
+      redirect jpg_to
+    end
   end
 
   private
-  def random_path
+  # Hits jpg.to to get a random image path for a keyword and returns the URL to that random image.
+  def jpg_to
     word = Words[ rand(Words.size) ]
-    return "http://#{word}.jpg.to"
+
+    # opening a jpg.to link returns this string:
+    #     <img src="http://www.aboutbodybuilding.org/wp-content/uploads/2011/09/bodybuilding-arnold-schwarzenegger.jpg" />
+    img = open("http://#{word}.jpg.to").read
+
+    return img.scan(/img src="(.*)"/i).flatten.first
   end
 end
