@@ -1,7 +1,7 @@
 require "open-uri"
 
 Ramaze::Route['r.jpgnow.info'] = lambda do |path, request|
-  if request.host.downcase == "r.jpgnow.info" and path == "/"
+  if request.host.downcase == "random.jpgnow.info" and path == "/"
     return "/img"
   end
 end
