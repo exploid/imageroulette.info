@@ -31,9 +31,9 @@ class MainController < Ramaze::Controller
     case type
     when "moustache" then
       moustache_path = "http://mustachify.me/?src=#{URI.encode(jpg_to)}"
-      redirect moustache_path
+      redirect moustache_path, status: 303
     else 
-      redirect jpg_to
+      redirect jpg_to, status: 303
     end
   end
 
