@@ -1,4 +1,8 @@
 require "open-uri"
+require 'redis'
+require 'json'
+
+
 
 [
  # Redirect to a random image
@@ -14,12 +18,6 @@ require "open-uri"
     end
   end
 end
-
-Words = [
-         "google",
-         "arnold",
-         "diehard",
-        ]
 
 class MainController < Ramaze::Controller
   map '/'
@@ -40,11 +38,10 @@ class MainController < Ramaze::Controller
   private
   # Hits jpg.to to get a random image path for a keyword and returns the URL to that random image.
   def jpg_to
-    word = Words[ rand(Words.size) ]
-
-    # opening a jpg.to link returns this string:
-    #     <img src="http://www.aboutbodybuilding.org/wp-content/uploads/2011/09/bodybuilding-arnold-schwarzenegger.jpg" />
-    img = open("http://#{word}.jpg.to").read
+    sets = JSON.parse(File.open("common.json", 'r').read)
+    word = sets['SFW_SETS'][ rand(sets['SFW_SETS'].size) ]
+    
+    img = open(word)
 
     return img.scan(/img src="(.*)"/i).flatten.first
   end
