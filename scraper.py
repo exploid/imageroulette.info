@@ -34,9 +34,9 @@ class Scraper:
 
 if __name__ == '__main__':
 	host = "http://boards.4chan.org"
-	red = Redis()
+	red = Redis(host="localhost", port=28765)
 	
-	sets = json.loads(open("common.json").read())
+	sets = json.loads(open("config/4chan.json").read())
 	all_sets = sets['NSFW_SETS'] + sets["SFW_SETS"]
 	
 	for sub in all_sets:
