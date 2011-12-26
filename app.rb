@@ -7,6 +7,7 @@ Bundler.require(:default)
 
 # Load stdlib
 require "open-uri"
+require "json"
 
 # Load codebase
 require "controller/main"
