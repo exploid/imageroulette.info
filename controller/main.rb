@@ -40,7 +40,7 @@ class MainController < Ramaze::Controller
 
   def fourchan
     set = FourChan[ rand(FourChan.size) ]
-    urls = $redis.smembers("o")
+    urls = $redis.smembers(set)
     url = urls[ rand(urls.size) ]
     return url
   end
